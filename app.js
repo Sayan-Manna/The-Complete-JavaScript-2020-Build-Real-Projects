@@ -40,7 +40,35 @@ document.querySelector('.btn-roll').addEventListener('click', () => {
     
 
     //3. Update the round IF the rolled number was NOT a 1
+    if (dice !== 1){    // === doesn't do type coercion && !== doesn't do type coercion
+        //add score
+        roundScore += dice;
+        // For displaying in the UI
+        document.querySelector('#current-' + activePlayer).textContent = roundScore;
+    }else{
+        //next player
+        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+        /*
+        if (activePlayer === 0) {
+            activePlayer = 1;
+        }else{
+            activePlayer = 0;
+        }
+        */
 
+        roundScore = 0;
+        document.getElementById('current-0').textContent = '0';
+        document.getElementById('current-1').textContent = '0';
+
+        //document.querySelector('.player-0-panel').classList.remove('active');
+        //document.querySelector('.player-1-panel').classList.add('active');
+        document.querySelector('.player-0-panel').classList.toggle('active');
+        document.querySelector('.player-1-panel').classList.toggle('active');
+
+        //Removing the dice icon as soon as the player changes
+        document.querySelector('.dice').style.display = 'none';
+
+    }
 
 
 });
