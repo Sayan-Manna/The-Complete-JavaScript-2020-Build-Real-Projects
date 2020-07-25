@@ -13,7 +13,8 @@ Change the game to follow these rules:
 
 var scores, roundScore, activePlayer, gamePlaying;
 
-init()
+init();
+
 var lastDice;
 
 document.querySelector('.btn-roll').addEventListener('click', () => {
@@ -63,9 +64,22 @@ document.querySelector('.btn-hold').addEventListener('click', () => {
         //Update the UI
         document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
+
+        var input = document.querySelector('.final-score').value;
+        var winningScore;
+        
+        // Undefined , 0, null, or "" are COERCED to false
+        // Anything else is COERCED true
+
+        if (input) {    // Which means the input is coerced to True
+            winningScore = input;
+        } else {
+            winningScore = 100;
+        }
+ 
         // Check if player WON the GAME
         
-        if (scores[activePlayer] >= 100){
+        if (scores[activePlayer] >= winningScore){
         
             document.querySelector('#name-' + activePlayer ).textContent = 'You are the MVP!!!'
             document.querySelector('.dice').style.display = 'none';
