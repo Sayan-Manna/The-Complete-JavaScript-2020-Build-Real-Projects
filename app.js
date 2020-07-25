@@ -8,32 +8,33 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
-var scores, roundScore, activePlayer;
+var scores, roundScore, activePlayer, gamePlaying;
 
 init()
 
-dice = Math.floor(Math.random() * 6) + 1; // rolls from 1 to 6
-
-
 document.querySelector('.btn-roll').addEventListener('click', () => {
-    // 1, Random Number
-    var dice = Math.floor(Math.random() * 6) + 1
 
-    // 2. Display the Result
-    var diceDOM = document.querySelector('.dice');
-    diceDOM.style.display = 'block';
-    diceDOM.src = 'dice-' + dice + '.png';
-    
+    if(gamePlaying) {
+        // 1, Random Number
+        var dice = Math.floor(Math.random() * 6) + 1
 
-    //3. Update the round IF the rolled number was NOT a 1
-    if (dice !== 1){    // === doesn't do type coercion && !== doesn't do type coercion
-        //add score
-        roundScore += dice;
-        // For displaying in the UI
-        document.querySelector('#current-' + activePlayer).textContent = roundScore;
-    }else{
+        // 2. Display the Result
+        var diceDOM = document.querySelector('.dice');
+        diceDOM.style.display = 'block';
+        diceDOM.src = 'dice-' + dice + '.png';
+        
 
-        nextPlayer();    // Calling the function Using the DON"T REPEAT YOURSELF PROPERTY (DRY)!!!!!!!!!!!!!!      
+        //3. Update the round IF the rolled number was NOT a 1
+        if (dice !== 1){    // === doesn't do type coercion && !== doesn't do type coercion
+            //add score
+            roundScore += dice;
+            // For displaying in the UI
+            document.querySelector('#current-' + activePlayer).textContent = roundScore;
+        }else{
+
+            nextPlayer();    // Calling the function Using the DON"T REPEAT YOURSELF PROPERTY (DRY)!!!!!!!!!!!!!!      
+
+        }
 
     }
 
@@ -41,28 +42,28 @@ document.querySelector('.btn-roll').addEventListener('click', () => {
 
 document.querySelector('.btn-hold').addEventListener('click', () => {
 
-    // adding current score to GLOBAL score
-    scores[activePlayer] += roundScore;
+    if (gamePlaying) {
+        // adding current score to GLOBAL score
+        scores[activePlayer] += roundScore;
 
-    //Update the UI
-    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+        //Update the UI
+        document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
-    // Check if player WON the GAME
-    
-    if (scores[activePlayer] >= 20){
-    
-        document.querySelector('#name-' + activePlayer ).textContent = 'You are the MVP! Winner Winner Chicken Dinner!'
-        document.querySelector('.dice').style.display = 'none';
-        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
-        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+        // Check if player WON the GAME
         
-    }else{
-        nextPlayer();
+        if (scores[activePlayer] >= 20){
+        
+            document.querySelector('#name-' + activePlayer ).textContent = 'You are the MVP!!!'
+            document.querySelector('.dice').style.display = 'none';
+            document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+            document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+            gamePlaying = false;
+            
+        }else{
+            nextPlayer();
+        }
+
     }
-
-    // Next Player
-    nextPlayer();
-
 
 });
 
@@ -88,6 +89,9 @@ function init() {
     scores = [0, 0];
     activePlayer = 0;
     roundScore = 0;
+    gamePlaying = true;
+
+    dice = Math.floor(Math.random() * 6) + 1; // rolls from 1 to 6
 
     document.querySelector('.dice').style.display = 'none';
 
@@ -102,8 +106,9 @@ function init() {
     document.querySelector('.player-0-panel').classList.remove('active');
     document.querySelector('.player-1-panel').classList.remove('active');
     document.querySelector('.player-0-panel').classList.add('active');
-    
+
 }
+
 
 
 
