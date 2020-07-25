@@ -9,25 +9,11 @@ GAME RULES:
 
 */
 var scores, roundScore, activePlayer;
-scores = [0, 0];
-roundScore = 0;
-activePlayer = 0;
+
+init()
 
 dice = Math.floor(Math.random() * 6) + 1; // rolls from 1 to 6
 
-//Setter
-//document.querySelector('#current-' + activePlayer).textContent = dice;
-//document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
-//Getter
-//var x = document.querySelector('#score-0').textContent;
-//console.log(x);
-
-document.querySelector('.dice').style.display = 'none';
-
-document.getElementById('score-0').textContent = '0';
-document.getElementById('score-1').textContent = '0';
-document.getElementById('current-0').textContent = '0';
-document.getElementById('current-1').textContent = '0';
 
 document.querySelector('.btn-roll').addEventListener('click', () => {
     // 1, Random Number
@@ -47,33 +33,7 @@ document.querySelector('.btn-roll').addEventListener('click', () => {
         document.querySelector('#current-' + activePlayer).textContent = roundScore;
     }else{
 
-        
-        //next player
-       // activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
-        /*
-        if (activePlayer === 0) {
-            activePlayer = 1;
-        }else{
-            activePlayer = 0;
-        }
-        */
-        /*
-        roundScore = 0;
-        document.getElementById('current-0').textContent = '0';
-        document.getElementById('current-1').textContent = '0';
-
-        //document.querySelector('.player-0-panel').classList.remove('active');
-        //document.querySelector('.player-1-panel').classList.add('active');
-        document.querySelector('.player-0-panel').classList.toggle('active');
-        document.querySelector('.player-1-panel').classList.toggle('active');
-
-        //Removing the dice icon as soon as the player changes
-        document.querySelector('.dice').style.display = 'none';
-
-        */
-
-
-        nextPlayer();       // Calling the function Using the DON"T REPEAT YOURSELF PROPERTY (DRY)!!!!!!!!!!!!!!      
+        nextPlayer();    // Calling the function Using the DON"T REPEAT YOURSELF PROPERTY (DRY)!!!!!!!!!!!!!!      
 
     }
 
@@ -100,7 +60,6 @@ document.querySelector('.btn-hold').addEventListener('click', () => {
         nextPlayer();
     }
 
-
     // Next Player
     nextPlayer();
 
@@ -121,6 +80,30 @@ function nextPlayer() {
     document.querySelector('.dice').style.display = 'none';
 
 };
+
+document.querySelector('.btn-new').addEventListener('click', init);
+
+function init() {
+
+    scores = [0, 0];
+    activePlayer = 0;
+    roundScore = 0;
+
+    document.querySelector('.dice').style.display = 'none';
+
+    document.getElementById('score-0').textContent = '0';
+    document.getElementById('score-1').textContent = '0';
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+    document.getElementById('name-0').textContent = 'Player 1';
+    document.getElementById('name-1').textContent = 'Player 2';
+    document.querySelector('.player-0-panel').classList.remove('winner');
+    document.querySelector('.player-1-panel').classList.remove('winner');
+    document.querySelector('.player-0-panel').classList.remove('active');
+    document.querySelector('.player-1-panel').classList.remove('active');
+    document.querySelector('.player-0-panel').classList.add('active');
+    
+}
 
 
 
