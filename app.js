@@ -46,8 +46,10 @@ document.querySelector('.btn-roll').addEventListener('click', () => {
         // For displaying in the UI
         document.querySelector('#current-' + activePlayer).textContent = roundScore;
     }else{
+
+        
         //next player
-        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+       // activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
         /*
         if (activePlayer === 0) {
             activePlayer = 1;
@@ -55,7 +57,7 @@ document.querySelector('.btn-roll').addEventListener('click', () => {
             activePlayer = 0;
         }
         */
-
+        /*
         roundScore = 0;
         document.getElementById('current-0').textContent = '0';
         document.getElementById('current-1').textContent = '0';
@@ -68,10 +70,57 @@ document.querySelector('.btn-roll').addEventListener('click', () => {
         //Removing the dice icon as soon as the player changes
         document.querySelector('.dice').style.display = 'none';
 
+        */
+
+
+        nextPlayer();       // Calling the function Using the DON"T REPEAT YOURSELF PROPERTY (DRY)!!!!!!!!!!!!!!      
+
+    }
+
+});
+
+document.querySelector('.btn-hold').addEventListener('click', () => {
+
+    // adding current score to GLOBAL score
+    scores[activePlayer] += roundScore;
+
+    //Update the UI
+    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+
+    // Check if player WON the GAME
+    
+    if (scores[activePlayer] >= 20){
+    
+        document.querySelector('#name-' + activePlayer ).textContent = 'You are the MVP! Winner Winner Chicken Dinner!'
+        document.querySelector('.dice').style.display = 'none';
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+        
+    }else{
+        nextPlayer();
     }
 
 
+    // Next Player
+    nextPlayer();
+
+
 });
+
+function nextPlayer() {
+  
+    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+
+    roundScore = 0;
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+
+    document.querySelector('.player-0-panel').classList.toggle('active');
+    document.querySelector('.player-1-panel').classList.toggle('active');
+
+    document.querySelector('.dice').style.display = 'none';
+
+};
 
 
 
